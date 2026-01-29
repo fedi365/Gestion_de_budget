@@ -1,4 +1,4 @@
-package org.example.gestion_de_budget.Data;
+package org.example.gestion_de_budget.config;
 
 import org.example.gestion_de_budget.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,7 @@ import java.time.LocalDate;
  *                salaryService.calculateRemainingSalary(1L, new
  *                BigDecimal("100"));
  * 
- *                CATEGORY category = new CATEGORY();
+ *                Category category = new Category();
  *                category.setMonthlyLimit(new BigDecimal("100"));
  *                category.setName("Food");
  *                category.setType(TransactionType.EXPENSE);

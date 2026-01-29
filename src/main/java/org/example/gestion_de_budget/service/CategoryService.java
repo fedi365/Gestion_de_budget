@@ -2,7 +2,7 @@ package org.example.gestion_de_budget.service;
 
 import java.math.BigDecimal;
 
-import org.example.gestion_de_budget.model.CATEGORY;
+import org.example.gestion_de_budget.model.Category;
 import org.example.gestion_de_budget.repository.CategoryRepository;
 import org.example.gestion_de_budget.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +20,16 @@ public class CategoryService {
     @Autowired
     private UserRepository userRepository;
 
-    public CATEGORY createCategory(CATEGORY category) {
+    public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
 
-    public List<CATEGORY> getAllCategories() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-
-    public CATEGORY updateCategory(Long id, CATEGORY categoryDetails) {
-        CATEGORY category = categoryRepository.findById(id)
+    public Category updateCategory(Long id, Category categoryDetails) {
+        Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         category.setName(categoryDetails.getName());
         category.setType(categoryDetails.getType());
@@ -41,12 +40,11 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-
-    public void MonthlyLimit(Long userId, CATEGORY category) {
+    public void MonthlyLimit(Long userId, Category category) {
         BigDecimal total = transactionService.SumTransactions(userId);
-        BigDecimal Limit =category.getMonthlyLimit();
+        BigDecimal Limit = category.getMonthlyLimit();
 
-        if (total.compareTo(Limit) > 0){
+        if (total.compareTo(Limit) > 0) {
             System.out.println("You have exceeded your monthly limit");
 
         }

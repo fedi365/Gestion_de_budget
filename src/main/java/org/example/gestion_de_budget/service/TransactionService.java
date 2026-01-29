@@ -11,7 +11,6 @@ import org.example.gestion_de_budget.repository.CategoryRepository;
 import org.example.gestion_de_budget.repository.TransactionRepository;
 import org.example.gestion_de_budget.repository.UserRepository;
 import org.example.gestion_de_budget.model.Transaction;
-import org.example.gestion_de_budget.model.TransactionType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;

@@ -1,41 +1,35 @@
 package org.example.gestion_de_budget.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.List;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
-@Table(name = "transactions")
+@Table(name = "monthly_depenses")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction {
+public class MonthlyDepense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal amount;
+    private BigDecimal depense;
     private LocalDate date;
     private String description;
-    @Enumerated(EnumType.STRING)
-    private TransactionType type;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private BigDecimal remainingDepense;
+    @OneToOne
+    @JoinColumn(name = "Salary_id")
+    private Salary salary;
 }

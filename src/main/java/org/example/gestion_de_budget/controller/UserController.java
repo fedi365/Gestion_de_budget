@@ -22,35 +22,36 @@ public class UserController {
     @Autowired
     private SalaryService salaryService;
 
-
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
         return userService.getALLusers();
     }
 
-    @PostMapping
+    @PostMapping("/createUser")
     public User createuser(@RequestBody User user) {
         userService.createUser(user);
         return user;
     }
+
     @PostMapping("/users/{userId}/transactions")
     public void addTransactionToUser(@PathVariable Long userId, @RequestBody Transaction transaction) {
         transactionService.addTransactionMethode2(transaction, userId);
     }
+
     @PostMapping("/users/{userId}/salaries")
     public Salary addSalaryToUser(@PathVariable Long userId, @RequestBody Salary salary) {
-        salaryService.createSalary(userId,salary);
+        salaryService.createSalary(userId, salary);
         return salary;
     }
+
     @GetMapping("/users/{userId}/transactions")
-        public List<Transaction>getListeTransactionByUser(Long userId){
+    public List<Transaction> getListeTransactionByUser(Long userId) {
         return transactionService.getAllTransactions(userId);
     }
+
     @GetMapping("/users/{userId}/SumTransactions")
-    public BigDecimal getSumTransactionsByUser(Long userId){
+    public BigDecimal getSumTransactionsByUser(Long userId) {
         return transactionService.SumTransactions(userId);
     }
-
-
 
 }

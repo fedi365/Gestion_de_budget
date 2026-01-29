@@ -22,19 +22,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullName;
+    private String password;
     private String email;
     private LocalDate createdAt;
+    private Double salary;
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactions = new ArrayList<>();
-
 
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDate.now();
     }
 
-
 }
-
-
-
