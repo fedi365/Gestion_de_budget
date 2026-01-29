@@ -2,30 +2,27 @@ name: Build Java Spring Boot
 
 on:
   push:
-    branches: [main] # Se lance seulement sur la branche main
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupérer le code
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # 2. Installer Java 21 (votre version)
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          java-version: "21"
-          distribution: "temurin"
+          java-version: '21'
+          distribution: 'temurin'
           cache: maven
 
-      # 3. Donner les droits d'exécution au fichier mvnw
-      - name: Give execute permission to mvnw
+      - name: Make mvnw executable
         run: chmod +x mvnw
-            
-      # 4. Lancer la compilation (sans les tests pour l'instant)
+
       - name: Build with Maven
         run: ./mvnw clean package -DskipTests
