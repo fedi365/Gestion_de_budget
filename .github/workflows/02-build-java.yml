@@ -1,36 +1,53 @@
-name: Build Java Spring Boot
+name: CI Spring Boot
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: Gestion_De_Budget
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
-      # 1️ Récupérer le code
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      # 2️ Fix des fins de ligne pour éviter les problèmes CRLF sur Linux
-      - name: Fix line endings for mvnw
-        run: sed -i 's/\r$//' mvnw
-
-      # 3️ Donner les droits d'exécution au fichier mvnw
-      - name: Make mvnw executable
-        run: chmod +x mvnw
-
-      # 4️ Installer Java 21
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v3
         with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
+          distribution: temurin
+          java-version: 21
 
-      # 5️ Build et tests
-      - name: Build and test with Maven
-        run: ./mvnw clean install
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build and test
+        run: mvn clean install
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/Gestion_De_Budget
+          SPRING_DATASOURCE_USERNAME: test
+          SPRING_DATASOURCE_PASSWORD: test
