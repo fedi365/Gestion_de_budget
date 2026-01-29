@@ -1,0 +1,10 @@
+name: Mon Premier Pipeline
+
+on: [push] # Se déclenche à chaque modification du code
+
+jobs:
+  dire-bonjour:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dire coucou
+        run: echo "Bonjour, CI/CD !"
