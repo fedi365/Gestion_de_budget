@@ -22,6 +22,10 @@ jobs:
           distribution: "temurin"
           cache: maven
 
-      # 3. Lancer la compilation (sans les tests pour l'instant)
+      # 3. Donner les droits d'exécution au fichier mvnw
+      - name: Give execute permission to mvnw
+        run: chmod +x mvnw
+            
+      # 4. Lancer la compilation (sans les tests pour l'instant)
       - name: Build with Maven
         run: ./mvnw clean package -DskipTests
