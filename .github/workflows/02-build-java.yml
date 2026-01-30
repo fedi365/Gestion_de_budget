@@ -51,3 +51,10 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/Gestion_De_Budget
           SPRING_DATASOURCE_USERNAME: test
           SPRING_DATASOURCE_PASSWORD: test
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gestion-De-Budget-jar
+          path: target/*.jar
+          retention-days: 1
